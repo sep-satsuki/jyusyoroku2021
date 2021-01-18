@@ -4,7 +4,7 @@
 <html>
 <head>
 
-<link rel="stylesheet" href="List.css">
+<link rel="stylesheet" href="css/List.css" type="text/css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -26,27 +26,29 @@
 <form method="GET" action="./Add.jsp">
 <input type="submit" value="新規登録" class="newbtn">
 </form>
-<form class="Serch">
-		住所：<input type="text" name="SearchName" class="searchbox">
-		
-</form>
-<form>
-	<input type="submit" value="検索"  class="btn">
+<form class="Search">
+	<ul>
+		<li>住所：<input type="text" name="SearchName"></li>
+		<li><input type="submit" value="検索"  class="bttn"></li>
+	</ul>
 </form>
 
- <%! String createPagenation(int maxPage, String nowPage) {
-   //ページネーション部のHTML格納用変数
+<%!
+  String createPagenation(int maxPage, String nowPage) {
+
+	//ページング用のHTML格納用変数
      String pagenation = "<ul>";
      //現在表示中のページ (引数として受け取ったnowPageをint型に変換)
      int currentPage = Integer.parseInt(nowPage);
      //表示させたいページリンク数の最大数
- 	 int PAGE_RANGE = 5;
+	 int PAGE_RANGE = 5;
     //現在表示中のページの前後に表示したいページリンク数
     int PAGE_GAP = 2;
     //現在表示中のページを基準にしたページリンクの開始ページ
     int currentStartPage;
     //現在表示中のページを基準にしたページリンクの終了ページ
     int currentEndPage;
+
 
     //currentStartPageとcurrentEndPageを決定する。
     if(PAGE_RANGE < maxPage) {
@@ -71,11 +73,11 @@
 
     //最初のページへのリンク「<<」と 現在表示ページの1つ前のページへのリンク「<」を作成
     if(currentPage == 1) {
-      pagenation += "<li><<</li>";
-      pagenation += "<li><</li>";
+      pagenation += "<li> << </li>";
+      pagenation += "<li> < </li>";
     } else {
-      pagenation += "<li><a href=\"./ListBL?page=1\"><<</a></li>";
-      pagenation += "<li><a href=\"./ListBL?page=" + (currentPage - 1) + "\"><</a></li>";
+      pagenation += "<li><a href=\"./ListBL?page=1\"> << </a></li>";
+      pagenation += "<li><a href=\"./ListBL?page=" + (currentPage - 1) + "\"> < </a></li>";
     }
 
     //ページ数リンクの作成
@@ -89,23 +91,29 @@
 
     //現在表示ページの1つ先のページへのリンク「>」と 最後のページへのリンク「>>」を作成
     if(currentPage == maxPage) {
-      pagenation += "<li>></li>";
-      pagenation +=	"<li>>></li>";
+      pagenation += "<li> > </li>";
+      pagenation +=	"<li> >> </li>";
     } else {
-      pagenation += "<li><a href=\"./ListBL?page=" + (currentPage + 1) + "\">></a></li>";
-      pagenation += "<li><a href=\"./ListBL?page=" + maxPage + "\">>></a></li>";
+      pagenation += "<li><a href=\"./ListBL?page=" + (currentPage + 1) + "\"> > </a></li>";
+      pagenation += "<li><a href=\"./ListBL?page=" + maxPage + "\"> >> </a></li>";
     }
     pagenation += "</ul>";
 
     return pagenation;
-  }
+    }
+
+
 %>
 <%	request.setCharacterEncoding("UTF-8");
+
 	//nowPageにリクエスト("Page")を設定、Stringに変換
 	nowPage = request.getAttribute("page").toString();
 	//listCntにリクエスト("listCnt")を設定、intに直してからStringに変換
 	listCnt = Integer.parseInt(request.getAttribute("listCnt").toString());
 	maxPage = listCnt / 10;
+
+    //SearchNameがnullのときはページングを表示する
+    if( Boolean.valueOf( SearchName == null)){
 
 	 if(maxPage == 0) {
 		  maxPage = 1;
@@ -114,6 +122,7 @@
 	  }
 	//rsにリクエスト//("Result")を設定
 	rs=(ResultSet)request.getAttribute("Result");
+    }
 %>
 <div class="pagenation"><%= createPagenation(maxPage, nowPage) %></div>
 <form>
@@ -123,7 +132,7 @@
 			<td width="50"  align="center">No.</td>
 			<td width="100"  align="center">名前</td>
 			<td width="300" align="center">住所</td>
-			<td width="120" align="center">電話番号</td>
+			<td width="150" align="center">電話番号</td>
 			<td width="100" align="center"></td>
 		</tr>
 
@@ -155,10 +164,8 @@
 
 
 </form>
-<form method="GET" action="./Add.jsp" class="newbtn">
-	<input type="submit" value="新規登録" >
-
+<form method="GET" action="./Add.jsp">
+<input type="submit" value="新規登録" class="newbtn">
 </form>
-
 </body>
 </html>

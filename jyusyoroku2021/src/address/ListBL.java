@@ -20,20 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 public class ListBL extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    //public ListBL() {
-    //    super();
-        // TODO Auto-generated constructor stub
-   // }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	//	response.getWriter().append("Served at: ").append(request.getContextPath());
 
 		Connection connect=null;
 		PreparedStatement ps=null;
@@ -44,7 +35,6 @@ public class ListBL extends HttpServlet {
 		String CntQuery="SELECT COUNT(*) count FROM jyusyoroku";
 		String nowPage="";
 		String SearchName=(String) request.getParameter("SearchName");
-
 
 
 		//pageがnullの場合はnowPageに初期値1を設定、null以外の場合はnowPageにリクエスト("page")を設定
@@ -113,12 +103,13 @@ public class ListBL extends HttpServlet {
 
 
 
-		//リクエスト(Serchname）がnullの時に・・
+		//リクエスト(Serchname）がnullの時に
 		if (SearchName == null) {
 			//SELECT文（取得クエリ）で取得し、where（条件）を指定、パラメーターでLIMIT句を指定している(limitStaから10行目まで limtStaは変数
 			SelectQuery="SELECT id,name,address,tel from jyusyoroku where delete_flg='0' Limit " + limitSta + ",10";
+			//リクエスト(Searchname）がnullじゃない時
 		}else{
-		//リクエスト(Serchname）がnullじゃない時
+
 			///SELECT文（取得クエリ）で取得し、where（条件）を指定、SerchNameは変数なので""の外に出して+をつける 文字列は''で囲む、%%は部分一致
 			SelectQuery="SELECT id,name,address,tel from jyusyoroku where delete_flg='0' and  address Like '%" + SearchName + "%' Limit " + limitSta + ",10";
 		}
@@ -143,8 +134,8 @@ public class ListBL extends HttpServlet {
 		request.setAttribute("page",nowPage);
 
 
-		
-		
+
+
 
 
 		//List.jspへ画面遷移

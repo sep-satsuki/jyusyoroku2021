@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+li {
+	display:inline;
+	list-style:none;
+}
+
+.Search {
+	margin-left:520px;
+
+}
+
+.Search li {
+	display:list-item;
+}
+
+.bttn{
+	width:153px;
+	margin-left:40px;
+}
+
+.table{
+	margin-left:50px;
+}
+.newbtn{
+	display:block;
+	margin-left:50px;
+	width:153px;
+}
+
+p{
+	margin-left:50px;
+}
+
+.aa{
+	text-decoration: none;
+}

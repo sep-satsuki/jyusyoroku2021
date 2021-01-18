@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/EditBL")
 public class EditBL extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -45,31 +45,30 @@ public class EditBL extends HttpServlet {
     	if( 40 < name.getBytes().length ) {
     		errmsg=ERRMSG_NAME01 + "<BR>";
     	}
-    	
+
     	if(name.getBytes().length == 0) {
     		errmsg= errmsg + ERRMSG_NAME02 + "<BR>";
 		}
-    	
+
     	if (80 <  address.getBytes().length) {
 			errmsg= errmsg + ERRMSG_ADDRESS01 + "<BR>";
 		}
-    	
+
     	if(address.getBytes().length == 0) {
 			errmsg= errmsg + ERRMSG_ADDRESS02 + "<BR>";
 		}
-    	
+
     	if(tel.getBytes().length >  0 && !(tel.matches("[0-9]{3}-[0-9]{4}-[0-9]{4}")) ) {
 			errmsg= errmsg + ERRMSG_TEL01 + "<BR>";
 		}
-		
-					
-		//サーブレットからjspへ渡している
+
+		//jspへ渡す
 		request.setAttribute("id", id);
 		request.setAttribute("name",name);
 		request.setAttribute("address",address);
 		request.setAttribute("tel",tel);
 		request.setAttribute("errmsg",errmsg);
-	
+
     	//errmsgがブランクの場合とそれ以外の遷移
     	if(errmsg == "") {
     		getServletContext().getRequestDispatcher("/EditCheck.jsp").forward(request, response);

@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/EditCommitBL")
 public class EditCommitBL extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -41,14 +41,14 @@ public class EditCommitBL extends HttpServlet {
 		String name=request.getParameter("name");
 		String address=request.getParameter("address");
 		String tel=request.getParameter("tel");
-		
-		// telの‐を無くし、一部を切り出ししている
+
+		// telの‐を無くし、結合
 		String tel1=tel.substring(0,3);
 	    String tel2=tel.substring(4,8);
 		String tel3=tel.substring(9,13);
 		tel=tel1 + tel2 + tel3;
-		
-		
+
+
 		//DB取得用のクエリを作成しUpdQueryへ設定している
 		UpdQuery="UPDATE jyusyoroku SET name='" + name+ "',address='" + address+  "',tel='" + tel + "' Where ID=" + id;
 
@@ -74,19 +74,15 @@ public class EditCommitBL extends HttpServlet {
 			        PreparedStatement ps = conn.prepareStatement(UpdQuery)){
 
 
-			    	//DBに変更をかけている
-			    	int i = ps.executeUpdate();
+			    //DBに変更をかけている
+			    int i = ps.executeUpdate();
 
 			    } catch (SQLException e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
 				}
-	
+
 		getServletContext().getRequestDispatcher("/ListBL").forward(request, response);
-				
-		
-		
-		
 	}
 
 	/**

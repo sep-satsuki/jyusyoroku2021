@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/DeleteCommitBL")
 public class DeleteCommitBL extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -32,51 +34,44 @@ public class DeleteCommitBL extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		
-		//変数の宣言、jspから受け取った情報を変数に格納する
-		String name=request.getParameter("name");
-		String address=request.getParameter("address");
-		String tel=request.getParameter("tel");
+		Connection connect=null;
+		Statement stmt=null;
+		ResultSet rs=null;
 		String UpdQuery="";
 		String id=request.getParameter("id");
-							
 
-		
-		
-		//DB更新用（削除として）のクエリを作成しUpdQueryへ設定している
-				UpdQuery="UPDATE jyusyoroku SET delete_flg ='1' Where ID=" +  id;
+		//DB削除用としてのクエリを作成しUpdQueryへ設定している
+		UpdQuery="UPDATE jyusyoroku SET delete_flg ='1' Where ID=" +  id;
 
 
-				final String URL
-			    = "jdbc:mysql://localhost:3306/jyusyoroku?serverTimezone=JST";
-			    final String USER = "root";
-			    final String PASS = "";
-			    //final String SQL = "select * from jyusyoroku;";
+		final String URL
+		= "jdbc:mysql://localhost:3306/jyusyoroku?serverTimezone=JST";
+		final String USER = "root";
+		final String PASS = "";
 
-			    try {
-			    	//Mysqlに繋げている（道順）
-					Class.forName("com.mysql.cj.jdbc.Driver");
-				} catch (ClassNotFoundException e1) {
-					// TODO 自動生成された catch ブロック
-					e1.printStackTrace();
-				}
-			    //DBの鍵
-			    try(Connection conn =
-			            DriverManager.getConnection(URL, USER, PASS);
-			    		//connが必要、connと(繋ぎたいSQL)をセットで使う
-			        PreparedStatement ps = conn.prepareStatement(UpdQuery)){
+		try {
+			//Mysqlに繋げる
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e1) {
+			// TODO 自動生成された catch ブロック
+			e1.printStackTrace();
+			}
+		//DBの鍵
+		try(Connection conn =
+		DriverManager.getConnection(URL, USER, PASS);
+		PreparedStatement ps = conn.prepareStatement(UpdQuery)){
 
 
-			    	//DBに変更をかけている
-			    	int i = ps.executeUpdate();
-			    	getServletContext().getRequestDispatcher("/ListBL").forward(request, response);
+		//DBの変更
+		int i = ps.executeUpdate();
+		getServletContext().getRequestDispatcher("/ListBL").forward(request, response);
 
-			    } catch (SQLException e) {
-					// TODO 自動生成された catch ブロック
-					e.printStackTrace();
-				}
+		} catch (SQLException e) {
+		// TODO 自動生成された catch ブロック
+		e.printStackTrace();
+		}
 
-						
+
 	}
 
 	/**
