@@ -112,8 +112,7 @@
 	listCnt = Integer.parseInt(request.getAttribute("listCnt").toString());
 	maxPage = listCnt / 10;
 
-    //SearchNameがnullのときはページングを表示する
-    if( Boolean.valueOf( SearchName == null)){
+
 
 	 if(maxPage == 0) {
 		  maxPage = 1;
@@ -122,7 +121,7 @@
 	  }
 	//rsにリクエスト//("Result")を設定
 	rs=(ResultSet)request.getAttribute("Result");
-    }
+ 
 %>
 <div class="pagenation"><%= createPagenation(maxPage, nowPage) %></div>
 <form>
@@ -160,9 +159,12 @@
 		<% }%>
 	</table>
 
+<%     //SearchNameがnullのときはページングを表示する
+    if(!( Boolean.valueOf( SearchName == null))){%>
+
 	<div class="pagenation"><%= createPagenation(maxPage, nowPage) %></div>
 
-
+<% } %>
 </form>
 <form method="GET" action="./Add.jsp">
 <input type="submit" value="新規登録" class="newbtn">
