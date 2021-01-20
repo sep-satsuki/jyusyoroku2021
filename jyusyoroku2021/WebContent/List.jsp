@@ -100,7 +100,8 @@
     pagenation += "</ul>";
 
     return pagenation;
-    }
+
+}
 
 
 %>
@@ -156,15 +157,15 @@
 				<td width="100" bgcolor="#808080" align="center"><input type="submit" value="編集" formaction="./Edit.jsp"><input type="submit" value="削除" formaction="./Delete.jsp"></td>
 			</tr>
 		</form>
+
 		<% }%>
 	</table>
 
-<%     //SearchNameがnullのときはページングを表示する
-    if(!( Boolean.valueOf( SearchName == null))){%>
+
 
 	<div class="pagenation"><%= createPagenation(maxPage, nowPage) %></div>
 
-<% } %>
+
 </form>
 <form method="GET" action="./Add.jsp">
 <input type="submit" value="新規登録" class="newbtn">

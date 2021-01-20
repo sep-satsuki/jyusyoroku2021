@@ -111,7 +111,7 @@ public class ListBL extends HttpServlet {
 		}else{
 
 			///SELECT文（取得クエリ）で取得し、where（条件）を指定、SerchNameは変数なので""の外に出して+をつける 文字列は''で囲む、%%は部分一致
-			SelectQuery="SELECT id,name,address,tel from jyusyoroku where delete_flg='0' and  address Like '%" + SearchName + "%' Limit " + limitSta + ",10";
+			SelectQuery="SELECT id,name,address,tel from jyusyoroku where delete_flg='0' and  address Like '%" + SearchName + "%' Limit " + limitSta + ",10" ;
 		}
 
 	    //SelectQueryの準備をしている、引数のSQLを設定したものがps（変数）に入ってる、sqlの実行準備ができた
