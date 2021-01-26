@@ -32,7 +32,7 @@ public class ListBL extends HttpServlet {
 		int listCnt = 0;
 		String SelectQuery="";
 		//取得対象全件数を取得するクエリ
-		String CntQuery="SELECT COUNT(*) count FROM jyusyoroku";
+		String CntQuery="";
 		String nowPage="";
 		String SearchName=(String) request.getParameter("SearchName");
 
@@ -54,7 +54,6 @@ public class ListBL extends HttpServlet {
 	    = "jdbc:mysql://localhost:3306/jyusyoroku?serverTimezone=JST";
 	    final String USER = "root";
 	    final String PASS = "";
-	    //final String SQL = "select * from jyusyoroku;";
 
 	    try {
 	    	//Mysqlに繋げている（道順）
@@ -75,7 +74,16 @@ public class ListBL extends HttpServlet {
 			e.printStackTrace();
 		}
 
-
+	    //SearchNameがnullの時にCntQueryは全件取得
+	    if(SearchName==null) {
+	    	CntQuery="SELECT COUNT(*) from jyusyoroku where delete_flg='0' Limit " + limitSta + ",10";
+	    	//nullじゃない時はCntQueryにSearchNameにはいってる値が一致するものを取得
+	    }else {
+	    	CntQuery="SELECT COUNT(*)  from jyusyoroku where delete_flg='0' and  address Like '%" + SearchName + "%'";
+	    }
+	    
+	    
+	    
 	    //6を実施し、結果をlistCntに設定↓
 	    //引数のSQLを設定したものがps（変数）に入ってる、sqlの実行準備ができた
 	    try {
@@ -114,6 +122,9 @@ public class ListBL extends HttpServlet {
 			SelectQuery="SELECT id,name,address,tel from jyusyoroku where delete_flg='0' and  address Like '%" + SearchName + "%' Limit " + limitSta + ",10" ;
 		}
 
+		
+		
+		
 	    //SelectQueryの準備をしている、引数のSQLを設定したものがps（変数）に入ってる、sqlの実行準備ができた
 	    try {
 			ps= connect.prepareStatement(SelectQuery);
