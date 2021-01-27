@@ -88,9 +88,9 @@ public class ListBL extends HttpServlet {
 	    }else {
 	    	CntQuery="SELECT COUNT(*) AS count from jyusyoroku where delete_flg='0' and  address Like '%" + SearchName + "%'";
 	    }
-	    
-	    
-	    
+
+
+
 	    //6を実施し、結果をlistCntに設定↓
 	    //引数のSQLを設定したものがps（変数）に入ってる、sqlの実行準備ができた
 	    try {
@@ -129,9 +129,9 @@ public class ListBL extends HttpServlet {
 			SelectQuery="SELECT id,name,address,tel from jyusyoroku where delete_flg='0' and  address Like '%" + SearchName + "%' Limit " + limitSta + ",10" ;
 		}
 
-		
-		
-		
+
+
+
 	    //SelectQueryの準備をしている、引数のSQLを設定したものがps（変数）に入ってる、sqlの実行準備ができた
 	    try {
 			ps= connect.prepareStatement(SelectQuery);
@@ -150,6 +150,8 @@ public class ListBL extends HttpServlet {
 	    request.setAttribute("listCnt",listCnt);
 		request.setAttribute("Result",rs);
 		request.setAttribute("page",nowPage);
+		request.setAttribute("SearchName", SearchName);
+
 
 
 

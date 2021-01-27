@@ -20,14 +20,18 @@
 	//最大ページ
 	int maxPage = 0;
 	//検索用
-	String SearchName = "";
+
+	String SearchNamePage="";
+	String SearchName="";
+
 %>
+
 
 <p>住所録管理システム：住所録一覧</p>
 <form method="GET" action="./Add.jsp">
 <input type="submit" value="新規登録" class="newbtn">
 </form>
-<form class="Search">
+<form class="Search" method="GET" action="./ListBL">
 	<ul>
 		<li>住所：<input type="text" name="SearchName"></li>
 		<li><input type="submit" value="検索"  class="bttn"></li>
@@ -35,7 +39,9 @@
 
 </form>
 
- <%! String createPagenation(int maxPage, String nowPage) {
+ <%!
+
+ String createPagenation(int maxPage, String nowPage) {
    //ページネーション部のHTML格納用変数
      String pagenation = "<ul>";
      //現在表示中のページ (引数として受け取ったnowPageをint型に変換)
@@ -55,28 +61,44 @@
       currentStartPage = currentPage - PAGE_GAP;
       currentEndPage = currentPage + PAGE_GAP;
 
+      //開始ページが１より小さい時、開始ページに１を代入し、終了ページに開始ページ＋ページリンクの最大数から１引いたものを代入する
       if(currentStartPage < 1) {
         currentStartPage = 1;
         currentEndPage = currentStartPage + (PAGE_RANGE - 1);
       }
+      //終了ページが最大ページより大きい時、終了ページと最大ページを同じにし、開始ページに終了ページ-ページリンクの最大数から１引いたものを代入する
       if(currentEndPage > maxPage) {
         currentEndPage = maxPage;
         currentStartPage = currentEndPage - (PAGE_RANGE - 1);
       }
 
     } else {
-      //最大ページ数がPAGE_RANGE以下の場合
+      //最大ページ数がページリンクの最大数以下の場合
       currentStartPage = 1;
       currentEndPage = maxPage;
     }
+%>
+<%
+	String SearchName =(String)request.getParameter("SearchName");
 
+
+    if(!(SearchName==null)){
+    	SearchNamePage="&SearchName=" + SearchName;
+    }
+
+%>
+
+
+<%!
     //最初のページへのリンク「<<」と 現在表示ページの1つ前のページへのリンク「<」を作成
+    //現在表示中のページが１の時
     if(currentPage == 1) {
       pagenation += "<li><<</li>";
       pagenation += "<li><</li>";
+      //そうじゃない時
     } else {
       pagenation += "<li><a href=\"./ListBL?page=1\"><<</a></li>";
-      pagenation += "<li><a href=\"./ListBL?page=" + (currentPage - 1) + "\"><</a></li>";
+      pagenation += "<li><a href=\"./ListBL?page=" + (currentPage - 1) + SearchNamePage + "\"><</a></li>";
     }
 
     //ページ数リンクの作成
@@ -84,24 +106,27 @@
       if(currentPage == i) {
         pagenation += "<li class=\"current-page\">" + i + "</li>";
       } else {
-        pagenation += "<li><a href=\"./ListBL?page=" + i + "\">" + i + "</a></li>";
+        pagenation += "<li><a href=\"./ListBL?page=" + i + SearchNamePage + "\">" + i + "</a></li>";
       }
     }
+
+
+
 
     //現在表示ページの1つ先のページへのリンク「>」と 最後のページへのリンク「>>」を作成
     if(currentPage == maxPage) {
       pagenation += "<li>></li>";
       pagenation +=	"<li>>></li>";
     } else {
-      pagenation += "<li><a href=\"./ListBL?page=" + (currentPage + 1) + "\">></a></li>";
-      pagenation += "<li><a href=\"./ListBL?page=" + maxPage + "\">>></a></li>";
+      pagenation += "<li><a href=\"./ListBL?page=" + (currentPage + 1) + SearchNamePage + "\">></a></li>";
+      pagenation += "<li><a href=\"./ListBL?page=" + maxPage + SearchNamePage +"\">>></a></li>";
     }
     pagenation += "</ul>";
 
     return pagenation;
   }
 %>
-<%	
+<%
 	request.setCharacterEncoding("UTF-8");
 	//nowPageにリクエスト("Page")を設定、Stringに変換
 	nowPage = request.getAttribute("page").toString();
