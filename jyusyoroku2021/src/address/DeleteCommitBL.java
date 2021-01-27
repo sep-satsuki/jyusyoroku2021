@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,9 +32,7 @@ public class DeleteCommitBL extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		Connection connect=null;
-		Statement stmt=null;
-		ResultSet rs=null;
+		//DB削除用クエリ
 		String UpdQuery="";
 		String id=request.getParameter("id");
 

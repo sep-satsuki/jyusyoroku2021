@@ -26,14 +26,21 @@ public class ListBL extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		//DB接続用変数
 		Connection connect=null;
+		//DB接続用変数
 		PreparedStatement ps=null;
+		//DB接続用変数
 		ResultSet rs=null;
+		//総件数
 		int listCnt = 0;
+		//表取得用クエリ
 		String SelectQuery="";
 		//取得対象全件数を取得するクエリ
 		String CntQuery="";
+		//現在のページ
 		String nowPage="";
+		//検索用文字列
 		String SearchName=(String) request.getParameter("SearchName");
 
 
@@ -74,12 +81,12 @@ public class ListBL extends HttpServlet {
 			e.printStackTrace();
 		}
 
-	    //SearchNameがnullの時にCntQueryは全件取得
+	    //SearchNameがnullの時にCntQueryは全件取得(全部表示するということ)
 	    if(SearchName==null) {
-	    	CntQuery="SELECT COUNT(*) from jyusyoroku where delete_flg='0' Limit " + limitSta + ",10";
+	    	CntQuery="SELECT COUNT(*) AS count from jyusyoroku where delete_flg='0'";
 	    	//nullじゃない時はCntQueryにSearchNameにはいってる値が一致するものを取得
 	    }else {
-	    	CntQuery="SELECT COUNT(*)  from jyusyoroku where delete_flg='0' and  address Like '%" + SearchName + "%'";
+	    	CntQuery="SELECT COUNT(*) AS count from jyusyoroku where delete_flg='0' and  address Like '%" + SearchName + "%'";
 	    }
 	    
 	    

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -36,9 +35,6 @@ public class AddCommitBL extends HttpServlet {
 		String name=request.getParameter("name");
 		String address=request.getParameter("address");
 		String tel=request.getParameter("tel");
-		ResultSet rs=null;
-		Connection connect=null;
-		String errmsg="";
 
 		// telの‐を無くし、結合
 		if(tel.getBytes().length >  0 && (tel.matches("[0-9]{3}-[0-9]{4}-[0-9]{4}")) ) {

@@ -28,20 +28,21 @@ public class EditBL extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		//変数の宣言、jspから受け取った情報を変数に格納する
+		//変数の宣言
 		String id=request.getParameter("id");
 		String name=request.getParameter("name");
 		String address=request.getParameter("address");
 		String tel=request.getParameter("tel");
 		String errmsg="";
 
+		//エラーメッセージの定数宣言
 		final String ERRMSG_NAME01="名前は全角20文字以内で入力してください";
 		final String ERRMSG_NAME02="名前は必須項目です";
 		final String ERRMSG_ADDRESS01="住所は全角40文字以内で入力してください";
 		final String ERRMSG_ADDRESS02="住所は必須項目です";
 		final String ERRMSG_TEL01="電話番号は「000-0000-0000」の形式で入力してください";
 
-		//エラーメッセージ
+		//エラーメッセージ、AddBLと同様
     	if( 40 < name.getBytes().length ) {
     		errmsg=ERRMSG_NAME01 + "<BR>";
     	}
@@ -62,7 +63,7 @@ public class EditBL extends HttpServlet {
 			errmsg= errmsg + ERRMSG_TEL01 + "<BR>";
 		}
 
-		//jspへ渡す
+		//EditCheck.jspへ渡している
 		request.setAttribute("id", id);
 		request.setAttribute("name",name);
 		request.setAttribute("address",address);

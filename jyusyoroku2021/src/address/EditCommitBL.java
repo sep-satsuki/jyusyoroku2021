@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -33,9 +32,8 @@ public class EditCommitBL extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		//変数の宣言、jspから受け取った情報を変数に格納する
-		Connection connect=null;
-		ResultSet rs=null;
+		//変数の宣言
+		//DB登録用クエリ
 		String UpdQuery="";
 		String id=request.getParameter("id");
 		String name=request.getParameter("name");

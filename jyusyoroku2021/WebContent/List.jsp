@@ -17,8 +17,9 @@
 	int listCnt = 0;
 	//現在のページ
 	String nowPage = "";
+	//最大ページ
 	int maxPage = 0;
-
+	//検索用
 	String SearchName = "";
 %>
 

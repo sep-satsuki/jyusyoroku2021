@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
+//変数の宣言
 	String name=(String)request.getAttribute("name");
 	String address=(String)request.getAttribute("address");
 	String tel=(String)request.getAttribute("tel");
