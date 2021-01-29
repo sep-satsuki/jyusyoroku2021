@@ -1,5 +1,5 @@
 <%@ page  language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.sql.ResultSet" %>
+    pageEncoding="UTF-8" import="java.sql.ResultSet"  import="java.net.URLEncoder"%>
 <!DOCTYPE html>
 
 <html>
@@ -22,7 +22,8 @@
 	//検索用
 
 	String SearchNamePage="";
-	String SearchName="";
+	String SearchName="住所";
+	String encodedResult ="";
 
 %>
 
@@ -79,11 +80,12 @@
     }
 %>
 <%
-	String SearchName =(String)request.getParameter("SearchName");
-
+	//検索実行時URLの暗号化（ページング機能で正しいページへ飛ぶために）
+	String SearchName =request.getParameter("SearchName");
 
     if(!(SearchName==null)){
-    	SearchNamePage="&SearchName=" + SearchName;
+    	String encodedResult = URLEncoder.encode(SearchName, "UTF-8");
+    	SearchNamePage="&SearchName=" + encodedResult;
     }
 
 %>
